@@ -187,7 +187,7 @@
 </template>
 
 <script>
-import { listSupplier, getPost, delPost, addPost, updatePost } from "@/api/supplier";
+import { listSupplier, getPost, delPost, addPost, updatePost } from "@/api/monitor/order";
 
 export default {
   name: "Post",
