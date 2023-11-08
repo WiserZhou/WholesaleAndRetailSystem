@@ -3,7 +3,8 @@ package com.ruoyi.web.controller.system;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysDept;
+//import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.core.domain.entity.SysCargo;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysGood;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -11,7 +12,8 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.service.ISysDeptService;
+//import com.ruoyi.system.service.ISysDeptService;
+import com.ruoyi.system.service.ISysCargoService;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysGoodService;
@@ -41,9 +43,11 @@ public class SysGoodController extends BaseController
     @Autowired
     private ISysRoleService roleService;
 
-    @Autowired
-    private ISysDeptService deptService;
+//    @Autowired
+//    private ISysDeptService deptService;
 
+    @Autowired
+    private ISysCargoService goodService;
     @Autowired
     private ISysPostService postService;
 
@@ -238,8 +242,8 @@ public class SysGoodController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/deptTree")
-    public AjaxResult deptTree(SysDept dept)
+    public AjaxResult deptTree(SysCargo dept)
     {
-        return success(deptService.selectDeptTreeList(dept));
+        return success(goodService.selectDeptTreeList(dept));
     }
 }
