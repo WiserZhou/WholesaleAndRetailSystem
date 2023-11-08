@@ -41,7 +41,6 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:post:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -52,7 +51,6 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:post:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,7 +61,6 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:post:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -73,7 +70,6 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:post:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -134,16 +130,16 @@
     <!-- 添加或修改岗位对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="商家名称" prop="postCode">
-          <el-input v-model="form.postCode" placeholder="请输入商家名称" />
+        <el-form-item label="客户姓名" prop="postCode">
+          <el-input v-model="form.postCode" placeholder="请输入客户姓名" />
         </el-form-item>
-        <el-form-item label="商家地址" prop="postName">
-          <el-input v-model="form.postName" placeholder="请输入商家地址" />
+        <el-form-item label="客户电话" prop="postName">
+          <el-input v-model="form.postName" placeholder="请输入客户电话" />
         </el-form-item>
         <!--        <el-form-item label="商家地址" prop="postSort">-->
         <!--          <el-input v-model="form.postSort" placeholder="请输入商家地址" />-->
         <!--        </el-form-item>-->
-        <el-form-item label="岗位状态" prop="status">
+        <el-form-item label="客户状态" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in dict.type.sys_normal_disable"
@@ -163,16 +159,16 @@
     </el-dialog>
     <el-dialog :title="title" :visible.sync="openn" width="500px" append-to-body>
       <el-form ref="form" :model="form"  label-width="80px">
-        <el-form-item label="商家名称" prop="postCode">
+        <el-form-item label="客户姓名" prop="postCode">
           <span>{{form.postCode}}</span>
         </el-form-item>
-        <el-form-item label="商家地址" prop="postName">
+        <el-form-item label="客户电话" prop="postName">
           <span>{{ form.postName }}</span>
         </el-form-item>
         <!--        <el-form-item label="商家地址" prop="postSort">-->
         <!--          <el-input v-model="form.postSort" placeholder="请输入商家地址" />-->
         <!--        </el-form-item>-->
-        <el-form-item label="岗位状态" prop="status">
+        <el-form-item label="客户状态" prop="status">
           <span>{{form.statusText}}</span>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
@@ -190,7 +186,7 @@
           <div class="head-container">
             <el-input
               v-model="objectqueryParams.userName"
-              placeholder="请输入用户名称"
+              placeholder="请输入商品名称"
               clearable
               size="small"
               prefix-icon="el-icon-search"
@@ -200,7 +196,7 @@
           <div class="head-container">
             <el-scrollbar style="height: 400px;">
               <el-table v-loading="loading" :data="filteredUserList" @selection-change="handleSelectionChange" :show-header="false">
-                <el-table-column label="用户名称" align="center" key="userName" prop="userName" :show-overflow-tooltip="true" />
+                <el-table-column label="商品名称" align="center" key="userName" prop="userName" :show-overflow-tooltip="true" />
                 <el-table-column
                   label="操作"
                   align="center"
@@ -230,21 +226,21 @@
         </el-col>
         <el-col :span="18" :xs="24">
           <el-form ref="form" :model="form"  label-width="80px">
-            <el-form-item label="商家名称" prop="postCode" style="display: inline-block; margin-right: 50px;">
-              <span>{{form.userName}}</span>
+            <el-form-item label="客户名称" prop="postCode" >
+              <span>{{form.postCode}}</span>
             </el-form-item>
-            <el-form-item label="商家地址" prop="postName" style="display: inline-block; margin-right: 50px;">
-              <span>{{ form.phonenumber }}</span>
+            <el-form-item label="客户电话" prop="postName" >
+              <span>{{ form.postName }}</span>
             </el-form-item>
             <!--        <el-form-item label="商家地址" prop="postSort">-->
             <!--          <el-input v-model="form.postSort" placeholder="请输入商家地址" />-->
             <!--        </el-form-item>-->
-            <el-form-item label="岗位状态" prop="status" style="display: inline-block; margin-right: 50px;">
-              <span>{{form.status}}</span>
-            </el-form-item>
-            <el-form-item label="备注" prop="remark" style="display: inline-block; margin-right: 50px;">
-              <span>{{ form.remark }}</span>
-            </el-form-item>
+<!--            <el-form-item label="岗位状态" prop="status" style="display: inline-block; margin-right: 50px;">-->
+<!--              <span>{{form.status}}</span>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="备注" prop="remark" style="display: inline-block; margin-right: 50px;">-->
+<!--              <span>{{ form.remark }}</span>-->
+<!--            </el-form-item>-->
           </el-form>
           <el-table v-loading="loading" :data="selectedItems">
             <!--            <el-table-column label="用户名称" align="center" key="userName" prop="userName" :show-overflow-tooltip="true" />-->
@@ -268,7 +264,10 @@
         </el-col>
 
       </el-row>
-
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submit">提交订单</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -477,6 +476,10 @@ export default {
         }
         // }
       });
+    },
+    submit(){
+      this.opp = false;
+      this.$modal.msgSuccess("提交成功");
     },
     /** 删除按钮操作 */
     handleDelete(row) {

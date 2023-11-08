@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="商家编码" prop="postCode">
+      <el-form-item label="订单编码" prop="postCode">
         <el-input
           v-model="queryParams.postCode"
-          placeholder="请输入供货商编码"
+          placeholder="请输入订单编码"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商家名称" prop="postName">
+      <el-form-item label="客户姓名" prop="postName">
         <el-input
           v-model="queryParams.postName"
-          placeholder="请输入供货商名称"
+          placeholder="请输入客户姓名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="商家状态" clearable>
+        <el-select v-model="queryParams.status" placeholder="订单状态" clearable>
           <el-option
             v-for="dict in dict.type.sys_normal_disable"
             :key="dict.value"
@@ -81,9 +81,9 @@
 
     <el-table v-loading="loading" :data="postList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="商家编号" align="center" prop="postId" />
-      <el-table-column label="商家名称" align="center" prop="postCode" />
-      <el-table-column label="商家地址" align="center" prop="postName" />
+      <el-table-column label="订单编号" align="center" prop="postId" />
+      <el-table-column label="客户姓名" align="center" prop="postCode" />
+      <el-table-column label="订单金额(元)" align="center" prop="postName" />
       <!--      <el-table-column label="商家地址" align="center" prop="postSort" />-->
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
@@ -104,13 +104,13 @@
             @click="handleView(scope.row)"
             v-hasPermi="['system:post:edit']"
           >查看</el-button>
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-edit"-->
-<!--            @click="handleUpdate(scope.row)"-->
-<!--            v-hasPermi="['system:post:edit']"-->
-<!--          >修改</el-button>-->
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['system:post:edit']"
+          >修改</el-button>
           <el-button
             size="mini"
             type="text"
@@ -162,16 +162,16 @@
     </el-dialog>
     <el-dialog :title="title" :visible.sync="openn" width="500px" append-to-body>
       <el-form ref="form" :model="form"  label-width="80px">
-        <el-form-item label="商家名称" prop="postCode">
+        <el-form-item label="客户姓名" prop="postCode">
           <span>{{form.postCode}}</span>
         </el-form-item>
-        <el-form-item label="商家地址" prop="postName">
+        <el-form-item label="订单金额" prop="postName">
           <span>{{ form.postName }}</span>
         </el-form-item>
         <!--        <el-form-item label="商家地址" prop="postSort">-->
         <!--          <el-input v-model="form.postSort" placeholder="请输入商家地址" />-->
         <!--        </el-form-item>-->
-        <el-form-item label="岗位状态" prop="status">
+        <el-form-item label="订单状态" prop="status">
           <span>{{form.statusText}}</span>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
@@ -289,6 +289,10 @@ export default {
       this.open = true;
       this.title = "添加供货商";
     },
+    // checkorder(row){
+    //   this.openn = false;
+    //   row.status = 1;
+    // },
     handleView(row) {
       // this.reset();
       this.form = {
@@ -308,7 +312,7 @@ export default {
       getPost(postId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改供货商";
+        this.title = "修改货品";
       });
     },
     /** 提交按钮 */

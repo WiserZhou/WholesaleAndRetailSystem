@@ -27,7 +27,7 @@ public class CustomerController extends BaseController {
     /**
      * 获取岗位列表
      */
-    @PreAuthorize("@ss.hasPermi('system:post:list')")
+    @PreAuthorize("@ss.hasPermi('monitor:customer:list')")
     @GetMapping("/list")
     public TableDataInfo list(Customer post)
     {
