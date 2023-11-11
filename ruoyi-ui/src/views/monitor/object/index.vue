@@ -40,8 +40,8 @@
             />
           </el-form-item>
           <el-col :span="6" :xs="24">
-            <el-form-item label="归属部门" prop="dept.deptName">
-              <treeselect v-model="queryParams.deptId" :options="deptOptions" :show-count="true" placeholder="请选择归属部门" @keyup.enter.native="handleQuery"/>
+            <el-form-item label="商品分区" prop="dept.deptName">
+              <treeselect v-model="queryParams.deptId" :options="deptOptions" :show-count="true" placeholder="请选择所属分区" @keyup.enter.native="handleQuery"/>
             </el-form-item>
           </el-col>
           <el-form-item label="状态" prop="status">
@@ -84,7 +84,7 @@
               icon="el-icon-plus"
               size="mini"
               @click="handleAdd"
-              v-hasPermi="['system:user:add']"
+              v-hasPermi="['monitor:object:list']"
             >新增</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -95,7 +95,7 @@
               size="mini"
               :disabled="single"
               @click="handleUpdate"
-              v-hasPermi="['system:user:edit']"
+              v-hasPermi="['monitor:object:list']"
             >修改</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -106,7 +106,7 @@
               size="mini"
               :disabled="multiple"
               @click="handleDelete"
-              v-hasPermi="['system:user:remove']"
+              v-hasPermi="['monitor:object:list']"
             >删除</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -116,7 +116,7 @@
               icon="el-icon-upload2"
               size="mini"
               @click="handleImport"
-              v-hasPermi="['system:user:import']"
+              v-hasPermi="['monitor:object:list']"
             >导入</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -126,7 +126,7 @@
               icon="el-icon-download"
               size="mini"
               @click="handleExport"
-              v-hasPermi="['system:user:export']"
+              v-hasPermi="['monitor:object:list']"
             >导出</el-button>
           </el-col>
           <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
@@ -166,22 +166,22 @@
                 type="text"
                 icon="el-icon-edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:user:edit']"
+                v-hasPermi="['monitor:object:list']"
               >修改</el-button>
               <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:user:remove']"
+                v-hasPermi="['monitor:object:list']"
               >删除</el-button>
               <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:user:resetPwd', 'system:user:edit']">
                 <el-button size="mini" type="text" icon="el-icon-d-arrow-right">更多</el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="handleResetPwd" icon="el-icon-key"
-                                    v-hasPermi="['system:user:resetPwd']">重置密码</el-dropdown-item>
+                                    v-hasPermi="['monitor:object:list']">重置密码</el-dropdown-item>
                   <el-dropdown-item command="handleAuthRole" icon="el-icon-circle-check"
-                                    v-hasPermi="['system:user:edit']">分配角色</el-dropdown-item>
+                                    v-hasPermi="['monitor:object:list']">分配角色</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -622,7 +622,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const userIds = row.userId || this.ids;
-      this.$modal.confirm('是否确认删除货品编号为"' + userIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除该货品').then(function() {
         return delUser(userIds);
       }).then(() => {
         this.getList();

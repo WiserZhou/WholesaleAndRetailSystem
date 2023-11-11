@@ -3,7 +3,7 @@
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="订单编码" prop="postCode">
         <el-input
-          v-model="queryParams.postCode"
+          v-model="queryParams.postId"
           placeholder="请输入订单编码"
           clearable
           @keyup.enter.native="handleQuery"
@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item label="客户姓名" prop="postName">
         <el-input
-          v-model="queryParams.postName"
+          v-model="queryParams.postCode"
           placeholder="请输入客户姓名"
           clearable
           @keyup.enter.native="handleQuery"
@@ -41,7 +41,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:post:add']"
+          v-hasPermi="['monitor:order:list']"
         >新增</el-button>
       </el-col>
 <!--      <el-col :span="1.5">-->
@@ -63,7 +63,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:post:remove']"
+          v-hasPermi="['monitor:order:list']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -73,7 +73,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:post:export']"
+          v-hasPermi="['monitor:order:list']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -102,21 +102,21 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['system:post:edit']"
+            v-hasPermi="['monitor:order:list']"
           >查看</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:post:edit']"
+            v-hasPermi="['monitor:order:list']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:post:remove']"
+            v-hasPermi="['monitor:order:list']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -133,16 +133,16 @@
     <!-- 添加或修改岗位对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="商家名称" prop="postCode">
+        <el-form-item label="客户姓名" prop="postCode">
           <el-input v-model="form.postCode" placeholder="请输入商家名称" />
         </el-form-item>
-        <el-form-item label="商家地址" prop="postName">
+        <el-form-item label="订单金额" prop="postName">
           <el-input v-model="form.postName" placeholder="请输入商家地址" />
         </el-form-item>
         <!--        <el-form-item label="商家地址" prop="postSort">-->
         <!--          <el-input v-model="form.postSort" placeholder="请输入商家地址" />-->
         <!--        </el-form-item>-->
-        <el-form-item label="岗位状态" prop="status">
+        <el-form-item label="订单状态" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in dict.type.sys_normal_disable"
@@ -151,7 +151,7 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
+        <el-form-item label="购买商品" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
@@ -174,7 +174,7 @@
         <el-form-item label="订单状态" prop="status">
           <span>{{form.statusText}}</span>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
+        <el-form-item label="购买商品" prop="remark">
           <span>{{ form.remark }}</span>
         </el-form-item>
       </el-form>
@@ -287,7 +287,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加供货商";
+      this.title = "添加订单";
     },
     // checkorder(row){
     //   this.openn = false;
@@ -312,7 +312,7 @@ export default {
       getPost(postId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改货品";
+        this.title = "修改订单";
       });
     },
     /** 提交按钮 */
@@ -338,7 +338,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const postIds = row.postId || this.ids;
-      this.$modal.confirm('是否确认删除岗位编号为"' + postIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除订单编号为"' + postIds + '"的数据项？').then(function() {
         return delPost(postIds);
       }).then(() => {
         this.getList();

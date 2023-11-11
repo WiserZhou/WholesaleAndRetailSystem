@@ -92,28 +92,28 @@
             type="text"
             icon="el-icon-add"
             @click="addorder()"
-            v-hasPermi="['system:post:edit']"
+            v-hasPermi="['monitor:customer:list']"
           >添加订单</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['system:post:edit']"
+            v-hasPermi="['monitor:customer:list']"
           >查看</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:post:edit']"
+            v-hasPermi="['monitor:customer:list']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:post:remove']"
+            v-hasPermi="['monitor:customer:list']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -393,7 +393,7 @@ export default {
     },
     // 取消按钮
     cancel() {
-      this.open = false;
+      this.opp = false;
       this.reset();
     },
     // 表单重置
@@ -433,7 +433,7 @@ export default {
     /** 添加订单 **/
     addorder(){
       this.opp = true;
-
+    this.title="添加订单"
     },
     handleView(row) {
       // this.reset();
@@ -493,7 +493,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/post/export', {
+      this.download('system/customer/export', {
         ...this.queryParams
       }, `post_${new Date().getTime()}.xlsx`)
     }

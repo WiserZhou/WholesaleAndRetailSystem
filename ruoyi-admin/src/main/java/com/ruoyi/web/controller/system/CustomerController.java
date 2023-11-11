@@ -37,7 +37,7 @@ public class CustomerController extends BaseController {
     }
 
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
-    @PreAuthorize("@ss.hasPermi('system:post:export')")
+    @PreAuthorize("@ss.hasPermi('monitor:customer:list')")
     @PostMapping("/export")
     public void export(HttpServletResponse response, Customer post)
     {
@@ -49,7 +49,7 @@ public class CustomerController extends BaseController {
     /**
      * 根据岗位编号获取详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:post:query')")
+    @PreAuthorize("@ss.hasPermi('monitor:customer:list')")
     @GetMapping(value = "/{postId}")
     public AjaxResult getInfo(@PathVariable Long postId)
     {
@@ -59,7 +59,7 @@ public class CustomerController extends BaseController {
     /**
      * 新增岗位
      */
-    @PreAuthorize("@ss.hasPermi('system:post:add')")
+    @PreAuthorize("@ss.hasPermi('monitor:customer:list')")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody Customer post)
@@ -79,7 +79,7 @@ public class CustomerController extends BaseController {
     /**
      * 修改岗位
      */
-    @PreAuthorize("@ss.hasPermi('system:post:edit')")
+    @PreAuthorize("@ss.hasPermi('monitor:customer:list')")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody Customer post)
@@ -99,7 +99,7 @@ public class CustomerController extends BaseController {
     /**
      * 删除岗位
      */
-    @PreAuthorize("@ss.hasPermi('system:post:remove')")
+    @PreAuthorize("@ss.hasPermi('monitor:customer:list')")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{postIds}")
     public AjaxResult remove(@PathVariable Long[] postIds)
